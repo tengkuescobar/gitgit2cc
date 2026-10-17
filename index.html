@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telkom University Merchandise — Lanyard & Carabiner Showcase</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: '#FFFFFF',
+            secondaryBg: '#F5F5F5',
+            mainText: '#171717',
+            mutedText: '#737373',
+            telkomRed: '#E31E24',
+            borderColor: '#E5E5E5',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FFFFFF;
+      color: #171717;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Efek 3D CSS Tilt Halus pada Kartu Showcase */
+    .perspective-stage {
+      perspective: 1000px;
+    }
+    .tilt-card {
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+      transform-style: preserve-3d;
+    }
+    .tilt-card:hover {
+      box-shadow: 0 20px 40px -15px rgba(23, 23, 23, 0.10);
+    }
+  </style>
+</head>
+<body class="selection:bg-telkomRed selection:text-white">
+
+  <!-- ===================================================================
+       1. STICKY NAVBAR
+       =================================================================== -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-borderColor">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Brand Identity -->
+      <a href="#beranda" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-lg bg-secondaryBg border border-borderColor flex items-center justify-center shrink-0">
+          <!-- Telkom University Emblem (Red Book & Grey U Shield) -->
+          <svg viewBox="0 0 64 64" class="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Telkom University">
+            <path d="M10 10C20 10 27 13 31 17V27C27 23 20 20 10 20V10Z" fill="#E31E24"/>
+            <path d="M54 10C44 10 37 13 33 17V27C37 23 44 20 54 20V10Z" fill="#E31E24"/>
+            <path d="M12 29H25V43C25 46.866 28.134 50 32 50C35.866 50 39 46.866 39 43V29H52V43C52 54.0457 43.0457 63 32 63C20.9543 63 12 54.0457 12 43V29Z" fill="#525252"/>
+            <rect x="28" y="29" width="8" height="7" rx="1" fill="#525252"/>
+          </svg>
+        </div>
+        <div>
+          <span class="block text-base font-extrabold tracking-tight text-mainText leading-none">Telkom University</span>
+          <span class="block text-[11px] font-medium text-mutedText tracking-wider uppercase mt-1">Merchandise Showcase</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-mutedText" aria-label="Navigasi Utama">
+        <a href="#beranda" class="hover:text-mainText transition-colors">Beranda</a>
+        <a href="#katalog" class="hover:text-mainText transition-colors">Katalog</a>
+        <a href="#design-board" class="hover:text-mainText transition-colors">Design Board</a>
+        <a href="#spesifikasi" class="hover:text-mainText transition-colors">Spesifikasi</a>
+        <a href="#pemesanan" class="hover:text-mainText transition-colors">Pemesanan</a>
+      </nav>
+
+      <!-- Primary CTA -->
+      <div class="flex items-center gap-3">
+        <a href="#pemesanan" class="bg-telkomRed hover:bg-mainText text-white text-xs font-bold uppercase tracking-wider px-5 py-3 rounded-lg transition-colors">
+          Pesan Sekarang
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================================================================
+         2. HERO SECTION (Split Layout + Interactive CSS 3D Showcase Card)
+         =================================================================== -->
+    <section id="beranda" class="py-14 sm:py-20 border-b border-borderColor bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Left Column: Typography & CTA -->
+        <div class="lg:col-span-6 space-y-6">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-secondaryBg border border-borderColor">
+            <span class="w-2 h-2 rounded-full bg-telkomRed"></span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-mainText">Koleksi Merchandise Kampus</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-mainText leading-[1.12]">
+            Identitas Kampus.<br />
+            <span class="text-telkomRed">Desain Tanpa Batas.</span>
+          </h1>
+
+          <p class="text-base sm:text-lg text-mutedText leading-relaxed">
+            Koleksi lanyard dan carabiner eksklusif Telkom University dengan desain minimalis, modern, dan fungsional untuk aktivitas harian di kampus.
+          </p>
+
+          <div class="pt-2 flex flex-wrap items-center gap-4">
+            <a href="#katalog" class="bg-mainText hover:bg-telkomRed text-white text-xs font-bold uppercase tracking-wider px-6 py-4 rounded-lg transition-colors">
+              Lihat Katalog (6 Variasi)
+            </a>
+            <a href="#design-board" class="bg-white hover:bg-secondaryBg text-mainText border border-borderColor text-xs font-bold uppercase tracking-wider px-6 py-4 rounded-lg transition-colors">
+              Lihat Design Board
+            </a>
+          </div>
+
+          <!-- Quick Stats -->
+          <div class="pt-6 border-t border-borderColor grid grid-cols-3 gap-4 text-xs">
+            <div>
+              <span class="block text-lg font-extrabold text-mainText">03 Tema</span>
+              <span class="text-mutedText">Custom Lanyard</span>
+            </div>
+            <div>
+              <span class="block text-lg font-extrabold text-mainText">03 Tema</span>
+              <span class="text-mutedText">Custom Carabiner</span>
+            </div>
+            <div>
+              <span class="block text-lg font-extrabold text-telkomRed">Swiss Grid</span>
+              <span class="text-mutedText">Minimalist Concept</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive Showcase Card with 3D Hover Tilt -->
+        <div class="lg:col-span-6 perspective-stage">
+          <div id="hero-tilt-card" class="tilt-card bg-secondaryBg border border-borderColor rounded-2xl p-6 sm:p-8">
+            
+            <!-- Top Card Header -->
+            <div class="flex items-center justify-between gap-2 pb-4 border-b border-borderColor">
+              <div>
+                <span id="hero-active-badge" class="text-[11px] font-bold uppercase tracking-widest text-telkomRed block">LANYARD // VARIASI 01</span>
+                <h2 id="hero-active-title" class="text-xl font-extrabold text-mainText">Modern Identity Lanyard</h2>
+              </div>
+              <span class="text-[11px] font-medium px-2.5 py-1 rounded bg-white border border-borderColor text-mutedText">
+                Pratinjau Interaktif
+              </span>
+            </div>
+
+            <!-- Vector Visual Display Area -->
+            <div id="hero-svg-stage" class="my-6 bg-white border border-borderColor rounded-xl h-72 flex items-center justify-center p-6 overflow-hidden">
+              <!-- Populated dynamically via JS -->
+            </div>
+
+            <!-- Description & Swatches -->
+            <p id="hero-active-desc" class="text-xs sm:text-sm text-mutedText leading-relaxed mb-5">
+              Desain modern dengan identitas Telkom University yang kuat, cocok untuk penggunaan sehari-hari.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-borderColor">
+              <!-- Color Swatches -->
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-semibold text-mutedText mr-1">Palet:</span>
+                <div id="hero-active-swatches" class="flex items-center gap-1.5"></div>
+              </div>
+
+              <!-- Quick Variant Switcher Pills (01 - 06) -->
+              <div class="flex items-center gap-1" role="group" aria-label="Pilih Cepat Varian">
+                <button onclick="setHeroPreview(0)" id="hero-pill-0" class="px-2.5 py-1 text-xs font-bold rounded bg-mainText text-white">L01</button>
+                <button onclick="setHeroPreview(1)" id="hero-pill-1" class="px-2.5 py-1 text-xs font-bold rounded bg-white border border-borderColor text-mainText hover:bg-borderColor">L02</button>
+                <button onclick="setHeroPreview(2)" id="hero-pill-2" class="px-2.5 py-1 text-xs font-bold rounded bg-white border border-borderColor text-mainText hover:bg-borderColor">L03</button>
+                <button onclick="setHeroPreview(3)" id="hero-pill-3" class="px-2.5 py-1 text-xs font-bold rounded bg-white border border-borderColor text-mainText hover:bg-borderColor">C01</button>
+                <button onclick="setHeroPreview(4)" id="hero-pill-4" class="px-2.5 py-1 text-xs font-bold rounded bg-white border border-borderColor text-mainText hover:bg-borderColor">C02</button>
+                <button onclick="setHeroPreview(5)" id="hero-pill-5" class="px-2.5 py-1 text-xs font-bold rounded bg-white border border-borderColor text-mainText hover:bg-borderColor">C03</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         3. KATALOG PRODUK (6 VARIASI: 3 LANYARD & 3 CARABINER)
+         =================================================================== -->
+    <section id="katalog" class="py-16 sm:py-20 border-b border-borderColor bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Header & Category Filter Tabs -->
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-6 pb-8 border-b border-borderColor">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-telkomRed block mb-1">Eksplorasi Konsep</span>
+            <h2 class="text-3xl font-extrabold tracking-tight text-mainText">Katalog Produk (6 Variasi)</h2>
+          </div>
+
+          <!-- Filter Buttons -->
+          <div class="inline-flex p-1 rounded-xl bg-secondaryBg border border-borderColor self-start sm:self-auto">
+            <button onclick="filterCatalog('all')" id="tab-all" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-mainText text-white transition-colors">
+              Semua (6)
+            </button>
+            <button onclick="filterCatalog('lanyard')" id="tab-lanyard" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-mutedText hover:text-mainText transition-colors">
+              Lanyard (3)
+            </button>
+            <button onclick="filterCatalog('carabiner')" id="tab-carabiner" class="px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-mutedText hover:text-mainText transition-colors">
+              Carabiner (3)
+            </button>
+          </div>
+        </div>
+
+        <!-- 6 Product Cards Grid -->
+        <div id="catalog-grid" class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Populated dynamically via JS -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         4. SEKSI DESIGN BOARD ASLI (Siap untuk Tugas & Presentasi)
+         =================================================================== -->
+    <section id="design-board" class="py-16 sm:py-20 border-b border-borderColor bg-secondaryBg">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-telkomRed block mb-1">Lembar Presentasi Desain</span>
+            <h2 class="text-3xl font-extrabold tracking-tight text-mainText">Design Variation Board</h2>
+            <p class="text-sm text-mutedText mt-1 max-w-2xl">
+              Mendukung pemuatan otomatis file <code>./design-board.png</code> di dalam folder repositori GitHub/Vercel, atau pilih langsung gambar dari komputer Anda saat presentasi.
+            </p>
+          </div>
+
+          <!-- 1-Click Upload Button for Class Presentation -->
+          <div class="shrink-0">
+            <label for="board-file-input" class="cursor-pointer inline-flex items-center gap-2 bg-mainText hover:bg-telkomRed text-white text-xs font-bold uppercase tracking-wider px-5 py-3.5 rounded-lg transition-colors shadow-xs">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+              </svg>
+              <span>Pilih Gambar dari Komputer</span>
+            </label>
+            <input type="file" id="board-file-input" accept="image/*" class="hidden" onchange="handleBoardUpload(event)" />
+          </div>
+        </div>
+
+        <!-- Design Board Frame -->
+        <div class="bg-white border border-borderColor rounded-2xl p-4 sm:p-8 shadow-xs">
+          <!-- Auto-loaded ./design-board.png or user-selected image -->
+          <img
+            id="board-preview-img"
+            src="./design-board.png"
+            alt="Telkom University Lanyard & Carabiner Design Variation Board"
+            class="w-full h-auto rounded-xl object-contain hidden"
+            onload="showUploadedBoard()"
+            onerror="showFallbackBoardSummary()"
+          />
+
+          <!-- Clean Built-in Reference Summary when ./design-board.png is not placed yet -->
+          <div id="board-fallback-summary" class="space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-4 border-b border-borderColor text-xs text-mutedText">
+              <span><strong>Tips Deployment GitHub/Vercel:</strong> Simpan gambar desain Anda dengan nama <code>design-board.png</code> satu folder dengan <code>index.html</code> agar tampil otomatis, atau klik tombol <strong>"Pilih Gambar dari Komputer"</strong> di atas.</span>
+              <span class="font-mono uppercase text-mainText font-semibold">6 DESIGN VARIATIONS</span>
+            </div>
+
+            <!-- Visual Summary Table of the 6 Concepts -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Lanyard Column -->
+              <div class="p-5 rounded-xl bg-secondaryBg border border-borderColor space-y-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-1 bg-telkomRed"></span>
+                  <h3 class="text-sm font-extrabold uppercase tracking-wider text-mainText">Lanyard Variations (01 – 03)</h3>
+                </div>
+                <ul class="space-y-2.5 text-xs text-mutedText">
+                  <li class="p-3 bg-white rounded-lg border border-borderColor">
+                    <strong class="text-mainText block">01. Modern Identity</strong>
+                    Pola poligon geometris merah, hitam, abu-abu, dan putih dengan logo Telkom University.
+                  </li>
+                  <li class="p-3 bg-white rounded-lg border border-borderColor">
+                    <strong class="text-mainText block">02. Tech &amp; Innovation</strong>
+                    Dominasi hitam dengan aksen garis sirkuit merah futuristik &amp; slogan <em>#Innovation for a Better Future</em>.
+                  </li>
+                  <li class="p-3 bg-white rounded-lg border border-borderColor">
+                    <strong class="text-mainText block">03. Heritage &amp; Campus Life</strong>
+                    Nuansa krem hangat &amp; merah marun dengan ilustrasi gedung kampus serta ornamen 4 kelopak.
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Carabiner Column -->
+              <div class="p-5 rounded-xl bg-secondaryBg border border-borderColor space-y-3">
+                <div class="flex items-center gap-2">
+                  <span class="w-4 h-1 bg-telkomRed"></span>
+                  <h3 class="text-sm font-extrabold uppercase tracking-wider text-mainText">Carabiner Variations (01 – 03)</h3>
+                </div>
+                <ul class="space-y-2.5 text-xs text-mutedText">
+                  <li class="p-3 bg-white rounded-lg border border-borderColor">
+                    <strong class="text-mainText block">01. Classic Red</strong>
+                    Aluminium anodized merah mengilap dengan gerbang pegas hitam dan logo putih.
+                  </li>
+                  <li class="p-3 bg-white rounded-lg border border-borderColor">
+                    <strong class="text-mainText block">02. Black Premium</strong>
+                    Logam hitam matte/satin dengan aksen garis chevron merah-abu dan kesan profesional.
+                  </li>
+                  <li class="p-3 bg-white rounded-lg border border-borderColor">
+                    <strong class="text-mainText block">03. Silver Minimal</strong>
+                    Finishing brushed silver bersih dengan pengait hitam dan branding logo hitam minimalis.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         5. SPESIFIKASI RINGKAS (4 Kartu Bersih)
+         =================================================================== -->
+    <section id="spesifikasi" class="py-16 sm:py-20 border-b border-borderColor bg-white">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-10">
+          <span class="text-xs font-bold uppercase tracking-widest text-telkomRed block mb-1">Standar Kualitas</span>
+          <h2 class="text-3xl font-extrabold tracking-tight text-mainText">Spesifikasi Material &amp; Komponen</h2>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Card 1 -->
+          <div class="p-6 rounded-xl bg-secondaryBg border border-borderColor">
+            <span class="text-xs font-mono font-bold text-telkomRed">01 / LANYARD</span>
+            <h3 class="text-base font-extrabold text-mainText mt-2">Polyester Tissue Sublimasi 2 Sisi</h3>
+            <p class="text-xs text-mutedText mt-2 leading-relaxed">
+              Pita polyester tissue lembut berkerapatan tinggi dengan cetak digital full-color dua sisi yang tajam dan nyaman dipakai seharian.
+            </p>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="p-6 rounded-xl bg-secondaryBg border border-borderColor">
+            <span class="text-xs font-mono font-bold text-telkomRed">02 / CARABINER</span>
+            <h3 class="text-base font-extrabold text-mainText mt-2">Aluminium Alloy + Spring Gate</h3>
+            <p class="text-xs text-mutedText mt-2 leading-relaxed">
+              Bodi aluminium ringan tahan karat dengan pilihan permukaan anodized red, matte black, atau brushed silver serta pegas pengunci presisi.
+            </p>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="p-6 rounded-xl bg-secondaryBg border border-borderColor">
+            <span class="text-xs font-mono font-bold text-telkomRed">03 / HARDWARE</span>
+            <h3 class="text-base font-extrabold text-mainText mt-2">Safety Buckle &amp; Metal Hook</h3>
+            <p class="text-xs text-mutedText mt-2 leading-relaxed">
+              Dilengkapi buckle pelepas cepat (quick-release) berbahan ABS hitam dan pengait logam putar (swivel lobster clasp) 360 derajat.
+            </p>
+          </div>
+
+          <!-- Card 4 -->
+          <div class="p-6 rounded-xl bg-secondaryBg border border-borderColor">
+            <span class="text-xs font-mono font-bold text-telkomRed">04 / PERUNTUKAN</span>
+            <h3 class="text-base font-extrabold text-mainText mt-2">Sivitas &amp; Acara Kampus</h3>
+            <p class="text-xs text-mutedText mt-2 leading-relaxed">
+              Dirancang untuk Kartu Tanda Mahasiswa (KTM), ID card dosen/staf, kepanitiaan organisasi mahasiswa, dan suvenir resmi kampus.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         6. FORMULIR PEMESANAN SEDERHANA
+         =================================================================== -->
+    <section id="pemesanan" class="py-16 sm:py-20 bg-secondaryBg border-b border-borderColor">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mb-8">
+          <span class="text-xs font-bold uppercase tracking-widest text-telkomRed block mb-1">Simulasi Pemesanan</span>
+          <h2 class="text-3xl font-extrabold tracking-tight text-mainText">Formulir Pemesanan Merchandise</h2>
+          <p class="text-sm text-mutedText mt-1">
+            Pilih varian desain lanyard atau carabiner yang diinginkan untuk membuat ringkasan pesanan.
+          </p>
+        </div>
+
+        <form id="order-form" onsubmit="handleOrderSubmit(event)" class="bg-white border border-borderColor rounded-2xl p-6 sm:p-8 space-y-5 shadow-xs">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label for="input-nama" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Nama Lengkap *</label>
+              <input type="text" id="input-nama" required placeholder="Contoh: Raka Pratama" class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderColor text-sm text-mainText focus:outline-none focus:bg-white focus:border-mainText" />
+            </div>
+            <div>
+              <label for="input-nim" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">NIM / Fakultas / Unit *</label>
+              <input type="text" id="input-nim" required placeholder="Contoh: 130121xxxx / Informatika" class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderColor text-sm text-mainText focus:outline-none focus:bg-white focus:border-mainText" />
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            <div class="sm:col-span-2">
+              <label for="input-varian" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Pilih Varian Desain *</label>
+              <select id="input-varian" class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderColor text-sm font-medium text-mainText focus:outline-none focus:bg-white focus:border-mainText">
+                <option value="Lanyard 01 — Modern Identity">Lanyard 01 — Modern Identity</option>
+                <option value="Lanyard 02 — Tech & Innovation">Lanyard 02 — Tech &amp; Innovation</option>
+                <option value="Lanyard 03 — Heritage & Campus Life">Lanyard 03 — Heritage &amp; Campus Life</option>
+                <option value="Carabiner 01 — Classic Red">Carabiner 01 — Classic Red</option>
+                <option value="Carabiner 02 — Black Premium">Carabiner 02 — Black Premium</option>
+                <option value="Carabiner 03 — Silver Minimal">Carabiner 03 — Silver Minimal</option>
+              </select>
+            </div>
+            <div>
+              <label for="input-jumlah" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Jumlah (Pcs) *</label>
+              <input type="number" id="input-jumlah" min="1" value="25" required class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderColor text-sm text-mainText focus:outline-none focus:bg-white focus:border-mainText" />
+            </div>
+          </div>
+
+          <div>
+            <label for="input-catatan" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Catatan Tambahan (Opsional)</label>
+            <textarea id="input-catatan" rows="2" placeholder="Contoh: Tambahan cetak nama himpunan atau paket bundling lanyard + carabiner..." class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderColor text-sm text-mainText focus:outline-none focus:bg-white focus:border-mainText"></textarea>
+          </div>
+
+          <button type="submit" class="w-full bg-telkomRed hover:bg-mainText text-white text-xs font-bold uppercase tracking-widest py-4 px-6 rounded-lg transition-colors">
+            Buat Ringkasan Pesanan
+          </button>
+
+          <!-- Order Summary Output Box -->
+          <div id="order-summary-box" class="hidden pt-4 border-t border-borderColor">
+            <div class="p-5 rounded-xl bg-secondaryBg border border-mainText space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-telkomRed">Ringkasan Pesanan Berhasil Dibuat</span>
+                <span id="summary-date" class="text-[11px] font-mono text-mutedText"></span>
+              </div>
+              <div id="summary-content" class="text-xs text-mainText space-y-1 pt-1"></div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================================
+       7. FOOTER SEDERHANA UNTUK TUGAS KULIAH
+       =================================================================== -->
+  <footer class="bg-white py-10 text-xs text-mutedText">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="font-extrabold text-mainText">Telkom University Merchandise Showcase</span>
+        <span>&mdash;</span>
+        <span>Lanyard &amp; Carabiner Concept</span>
+      </div>
+      <div>
+        <span>Static Web Assignment &bull; Siap Deploy di GitHub Pages &amp; Vercel</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================
+       MINIMAL VANILLA JAVASCRIPT (Data Produk, Ilustrasi Vektor Bersih, Filter)
+       =================================================================== -->
+  <script>
+    // Data 6 Variasi Produk (3 Lanyard & 3 Carabiner)
+    const PRODUCTS = [
+      {
+        id: 'lanyard-01',
+        category: 'lanyard',
+        code: '01',
+        name: 'Modern Identity Lanyard',
+        theme: 'MODERN IDENTITY',
+        formValue: 'Lanyard 01 — Modern Identity',
+        desc: 'Desain modern dengan identitas Telkom University yang kuat, memadukan motif geometris merah, hitam, abu-abu, dan putih untuk penggunaan sehari-hari.',
+        colors: ['#E31E24', '#262626', '#737373', '#FFFFFF'],
+        styleType: 'lanyard-modern'
+      },
+      {
+        id: 'lanyard-02',
+        category: 'lanyard',
+        code: '02',
+        name: 'Tech & Innovation Lanyard',
+        theme: 'TECH & INNOVATION',
+        formValue: 'Lanyard 02 — Tech & Innovation',
+        desc: 'Tema teknologi berwarna hitam pekat dengan elemen grafis garis sirkuit merah futuristik dan slogan #Innovation for a Better Future.',
+        colors: ['#E31E24', '#171717', '#404040', '#A3A3A3'],
+        styleType: 'lanyard-tech'
+      },
+      {
+        id: 'lanyard-03',
+        category: 'lanyard',
+        code: '03',
+        name: 'Heritage & Campus Life Lanyard',
+        theme: 'HERITAGE & CAMPUS LIFE',
+        formValue: 'Lanyard 03 — Heritage & Campus Life',
+        desc: 'Mengangkat suasana kampus dengan warna krem hangat (warm cream), merah marun, ilustrasi gedung ikonik kampus, dan motif empat kelopak.',
+        colors: ['#B92B27', '#6E1E2A', '#9E9A95', '#EFECE6'],
+        styleType: 'lanyard-heritage'
+      },
+      {
+        id: 'carabiner-01',
+        category: 'carabiner',
+        code: '01',
+        name: 'Classic Red Carabiner',
+        theme: 'CLASSIC RED',
+        formValue: 'Carabiner 01 — Classic Red',
+        desc: 'Desain klasik dengan bodi aluminium anodized merah khas Telkom University, pengait pegas hitam, dan logo putih yang elegan.',
+        colors: ['#E31E24', '#171717', '#A3A3A3'],
+        styleType: 'carabiner-red'
+      },
+      {
+        id: 'carabiner-02',
+        category: 'carabiner',
+        code: '02',
+        name: 'Black Premium Carabiner',
+        theme: 'BLACK PREMIUM',
+        formValue: 'Carabiner 02 — Black Premium',
+        desc: 'Tampilan industrial premium dengan bodi logam hitam matte/satin dan aksen chevron merah-abu yang modern serta profesional.',
+        colors: ['#262626', '#E31E24', '#A3A3A3'],
+        styleType: 'carabiner-black'
+      },
+      {
+        id: 'carabiner-03',
+        category: 'carabiner',
+        code: '03',
+        name: 'Silver Minimal Carabiner',
+        theme: 'SILVER MINIMAL',
+        formValue: 'Carabiner 03 — Silver Minimal',
+        desc: 'Desain minimalis dengan warna brushed silver yang bersih dan serbaguna, dipadukan dengan gate hitam serta logo hitam.',
+        colors: ['#C4C7CE', '#262626', '#E5E7EB'],
+        styleType: 'carabiner-silver'
+      }
+    ];
+
+    // Generator Ilustrasi Vektor SVG yang Bersih & Tajam untuk Setiap Variasi
+    function getCleanProductSVG(styleType) {
+      if (styleType.startsWith('lanyard')) {
+        const isModern = styleType === 'lanyard-modern';
+        const isTech = styleType === 'lanyard-tech';
+        const strapBg = isTech ? '#171717' : isModern ? '#FFFFFF' : '#EFECE6';
+        const strapAccent = isModern ? '#E31E24' : isTech ? '#262626' : '#B92B27';
+        const textColor = isTech ? '#FFFFFF' : '#171717';
+        const tabColor = isTech ? '#171717' : isModern ? '#E31E24' : '#B92B27';
+
+        return `
+          <svg viewBox="0 0 320 220" class="w-full h-full max-h-60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Collar Loop Back -->
+            <path d="M125 22 C145 10, 175 10, 195 22" stroke="${strapAccent}" stroke-width="18" stroke-linecap="round"/>
+            <!-- Left Strap -->
+            <path d="M116 24 L144 134 L164 134 L138 24 Z" fill="${strapAccent}"/>
+            <!-- Right Main Strap -->
+            <path d="M182 24 L154 134 L178 134 L204 24 Z" fill="${strapBg}" stroke="#D4D4D4" stroke-width="1"/>
+            <!-- Motif Details on Strap -->
+            ${isModern ? `
+              <polygon points="178,40 200,40 192,72" fill="#E31E24"/>
+              <polygon points="168,82 190,82 182,112" fill="#262626"/>
+            ` : isTech ? `
+              <path d="M188 32 L176 66 L186 78 L168 122" stroke="#E31E24" stroke-width="2.5" stroke-linecap="round"/>
+            ` : `
+              <circle cx="185" cy="58" r="7" fill="#B92B27"/>
+              <rect x="171" y="85" width="16" height="22" stroke="#6E1E2A" stroke-width="2"/>
+            `}
+            <!-- Telkom University Text on Strap -->
+            <text x="178" y="96" fill="${textColor}" font-size="8" font-weight="800" transform="rotate(-75 178 96)" font-family="Inter, sans-serif">Telkom University</text>
+            <!-- Black Safety Buckle -->
+            <rect x="145" y="132" width="32" height="22" rx="4" fill="#171717"/>
+            <rect x="142" y="140" width="38" height="6" rx="2" fill="#404040"/>
+            <!-- Lower Tab -->
+            <rect x="149" y="154" width="24" height="18" rx="2" fill="${tabColor}"/>
+            <!-- Metal Swivel Hook -->
+            <circle cx="161" cy="192" r="14" stroke="#262626" stroke-width="5"/>
+            <rect x="156" y="172" width="10" height="7" rx="2" fill="#262626"/>
+          </svg>
+        `;
+      } else {
+        // Carabiner Vector Illustration
+        const isRed = styleType === 'carabiner-red';
+        const isBlack = styleType === 'carabiner-black';
+        const bodyStroke = isRed ? '#E31E24' : isBlack ? '#262626' : '#C4C7CE';
+        const textFill = isRed || isBlack ? '#FFFFFF' : '#171717';
+
+        return `
+          <svg viewBox="0 0 320 220" class="w-full h-full max-h-60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g transform="rotate(28 160 110)">
+              <!-- Carabiner Pear Body -->
+              <path d="M122 55 A38 38 0 1 1 198 55 L208 152 A48 48 0 1 1 112 152 L116 125" stroke="${bodyStroke}" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- Black Cylindrical Gate -->
+              <line x1="120" y1="68" x2="114" y2="132" stroke="#171717" stroke-width="15" stroke-linecap="round"/>
+              <!-- Hinge Pins -->
+              <circle cx="120" cy="70" r="3" fill="#D4D4D4"/>
+              <circle cx="114" cy="130" r="3" fill="#D4D4D4"/>
+              <!-- Optional Chevron on Black Premium -->
+              ${isBlack ? `
+                <path d="M194 148 L203 138 L212 148" stroke="#E31E24" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+              ` : ''}
+              <!-- Telkom University Branding along Spine -->
+              <text x="206" y="132" fill="${textFill}" font-size="8.5" font-weight="800" transform="rotate(-84 206 132)" font-family="Inter, sans-serif">Telkom University</text>
+            </g>
+          </svg>
+        `;
+      }
+    }
+
+    // Update Pratinjau Hero
+    function setHeroPreview(index) {
+      const p = PRODUCTS[index];
+      if (!p) return;
+
+      document.getElementById('hero-active-badge').textContent = `${p.category.toUpperCase()} // VARIASI ${p.code}`;
+      document.getElementById('hero-active-title').textContent = p.name;
+      document.getElementById('hero-active-desc').textContent = p.desc;
+      document.getElementById('hero-svg-stage').innerHTML = getCleanProductSVG(p.styleType);
+
+      document.getElementById('hero-active-swatches').innerHTML = p.colors.map(hex => `
+        <span class="w-4 h-4 rounded-full border border-neutral-300 inline-block" style="background-color: ${hex}"></span>
+      `).join('');
+
+      PRODUCTS.forEach((_, idx) => {
+        const pill = document.getElementById(`hero-pill-${idx}`);
+        if (pill) {
+          pill.className = idx === index
+            ? 'px-2.5 py-1 text-xs font-bold rounded bg-mainText text-white'
+            : 'px-2.5 py-1 text-xs font-bold rounded bg-white border border-borderColor text-mainText hover:bg-borderColor';
+        }
+      });
+    }
+
+    // Render Katalog 6 Kartu
+    let currentFilter = 'all';
+    function renderCatalog() {
+      const grid = document.getElementById('catalog-grid');
+      const filtered = currentFilter === 'all'
+        ? PRODUCTS
+        : PRODUCTS.filter(p => p.category === currentFilter);
+
+      grid.innerHTML = filtered.map((p) => {
+        const idx = PRODUCTS.findIndex(item => item.id === p.id);
+        return `
+          <article class="bg-white border border-borderColor rounded-2xl p-6 flex flex-col justify-between hover:border-mainText transition-colors">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-2xl font-extrabold text-mainText">${p.code}</span>
+                <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-secondaryBg text-mutedText">
+                  ${p.theme}
+                </span>
+              </div>
+
+              <div class="bg-secondaryBg border border-borderColor rounded-xl h-52 flex items-center justify-center p-4 mb-5">
+                ${getCleanProductSVG(p.styleType)}
+              </div>
+
+              <h3 class="text-lg font-extrabold text-mainText">${p.name}</h3>
+              <p class="text-xs text-mutedText mt-2 leading-relaxed">${p.desc}</p>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-borderColor flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                ${p.colors.map(hex => `<span class="w-3.5 h-3.5 rounded-full border border-neutral-300" style="background-color: ${hex}"></span>`).join('')}
+              </div>
+
+              <button onclick="selectVariantForOrder(${idx})" class="text-xs font-bold uppercase tracking-wider text-telkomRed hover:text-mainText transition-colors">
+                Pilih Varian &rarr;
+              </button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function filterCatalog(category) {
+      currentFilter = category;
+      ['all', 'lanyard', 'carabiner'].forEach(cat => {
+        const btn = document.getElementById(`tab-${cat}`);
+        btn.className = cat === category
+          ? 'px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider bg-mainText text-white transition-colors'
+          : 'px-4 py-2 rounded-lg text-xs font-bold uppercase tracking-wider text-mutedText hover:text-mainText transition-colors';
+      });
+      renderCatalog();
+    }
+
+    function selectVariantForOrder(index) {
+      const p = PRODUCTS[index];
+      if (!p) return;
+      setHeroPreview(index);
+      const selectEl = document.getElementById('input-varian');
+      if (selectEl) selectEl.value = p.formValue;
+      document.getElementById('pemesanan').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Penanganan Gambar Design Board Asli
+    function showUploadedBoard() {
+      document.getElementById('board-preview-img').classList.remove('hidden');
+      document.getElementById('board-fallback-summary').classList.add('hidden');
+    }
+
+    function showFallbackBoardSummary() {
+      document.getElementById('board-preview-img').classList.add('hidden');
+      document.getElementById('board-fallback-summary').classList.remove('hidden');
+    }
+
+    function handleBoardUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById('board-preview-img');
+        img.src = e.target.result;
+        showUploadedBoard();
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // Penanganan Submit Form Pemesanan
+    function handleOrderSubmit(event) {
+      event.preventDefault();
+      const nama = document.getElementById('input-nama').value.trim();
+      const nim = document.getElementById('input-nim').value.trim();
+      const varian = document.getElementById('input-varian').value;
+      const jumlah = document.getElementById('input-jumlah').value;
+      const catatan = document.getElementById('input-catatan').value.trim() || 'Tidak ada catatan khusus';
+
+      document.getElementById('summary-date').textContent = new Date().toLocaleDateString('id-ID');
+      document.getElementById('summary-content').innerHTML = `
+        <p><strong>Pemohon:</strong> ${nama} (${nim})</p>
+        <p><strong>Varian Dipilih:</strong> ${varian}</p>
+        <p><strong>Jumlah Pesanan:</strong> ${jumlah} Pcs</p>
+        <p><strong>Catatan:</strong> ${catatan}</p>
+      `;
+      document.getElementById('order-summary-box').classList.remove('hidden');
+    }
+
+    // Efek Hover Tilt 3D Ringan pada Kartu Hero
+    const tiltCard = document.getElementById('hero-tilt-card');
+    if (tiltCard) {
+      tiltCard.addEventListener('mousemove', (e) => {
+        const rect = tiltCard.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const rotateX = (-y / (rect.height / 2)) * 4;
+        const rotateY = (x / (rect.width / 2)) * 4;
+        tiltCard.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      tiltCard.addEventListener('mouseleave', () => {
+        tiltCard.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    // Inisialisasi Halaman
+    window.addEventListener('DOMContentLoaded', () => {
+      setHeroPreview(0);
+      renderCatalog();
+    });
+  </script>
+</body>
+</html>
