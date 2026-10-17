@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telkom University — 3D Interactive Merchandise Showcase</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Three.js & OrbitControls via CDN (Zero Build Step Required) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primaryBg: '#FFFFFF',
+            secondaryBg: '#F5F5F5',
+            mainText: '#171717',
+            secondaryText: '#737373',
+            brandRed: '#E31E24',
+            borderLight: '#E7E7E7',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #FFFFFF;
+      color: #171717;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    canvas {
+      outline: none;
+      display: block;
+    }
+    /* Custom Subtle Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F5F5F5;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D4D4D4;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #171717;
+    }
+  </style>
+</head>
+<body class="selection:bg-brandRed selection:text-white">
+
+  <!-- ===================================================================
+       A. STICKY SWISS EDITORIAL NAVIGATION HEADER
+       =================================================================== -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-borderLight">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Brand Logo -->
+      <a href="#beranda" class="flex items-center gap-3 group focus:outline-none">
+        <div class="w-10 h-10 rounded-lg bg-secondaryBg border border-borderLight flex items-center justify-center shrink-0">
+          <!-- Telkom University Stylized Emblem -->
+          <svg viewBox="0 0 64 64" class="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Logo Telkom University">
+            <path d="M10 10C20 10 27 13 31 17V27C27 23 20 20 10 20V10Z" fill="#E31E24"/>
+            <path d="M54 10C44 10 37 13 33 17V27C37 23 44 20 54 20V10Z" fill="#E31E24"/>
+            <path d="M12 29H25V43C25 46.866 28.134 50 32 50C35.866 50 39 46.866 39 43V29H52V43C52 54.0457 43.0457 63 32 63C20.9543 63 12 54.0457 12 43V29Z" fill="#525252"/>
+            <rect x="28" y="29" width="8" height="7" rx="1" fill="#525252"/>
+          </svg>
+        </div>
+        <div>
+          <span class="block text-sm font-extrabold tracking-tight text-mainText leading-none">Telkom University</span>
+          <span class="block text-[10px] font-semibold uppercase tracking-widest text-secondaryText mt-1">3D Merchandise Showcase</span>
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-secondaryText" aria-label="Navigasi Utama">
+        <a href="#beranda" class="hover:text-mainText transition-colors">Beranda</a>
+        <a href="#koleksi" class="hover:text-mainText transition-colors">Koleksi</a>
+        <a href="#kustomisasi" class="hover:text-mainText transition-colors">Kustomisasi 3D</a>
+        <a href="#eksplorasi" class="hover:text-mainText transition-colors">Eksplorasi</a>
+        <a href="#tentang" class="hover:text-mainText transition-colors">Tentang</a>
+      </nav>
+
+      <!-- Primary CTA -->
+      <div class="flex items-center gap-3">
+        <a href="#kustomisasi" class="bg-mainText hover:bg-brandRed text-white text-xs font-bold uppercase tracking-widest px-5 py-3 rounded-lg transition-colors">
+          Jelajahi Produk
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===================================================================
+         B. HERO SECTION (SPLIT EDITORIAL + INTERACTIVE 3D WEBGL SHOWCASE)
+         =================================================================== -->
+    <section id="beranda" class="border-b border-borderLight bg-white">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 min-h-[620px]">
+        
+        <!-- Left Column: Swiss Editorial Copy -->
+        <div class="lg:col-span-6 p-6 sm:p-12 lg:p-16 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-borderLight">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondaryBg border border-borderLight mb-8">
+              <span class="w-2 h-2 rounded-full bg-brandRed animate-pulse"></span>
+              <span class="text-[11px] font-bold uppercase tracking-widest text-mainText">WebGL 3D Interactive Concept — 06 Variasi</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-mainText leading-[1.06]">
+              Identitas Kampus.<br />
+              <span class="text-brandRed">Desain Tanpa Batas.</span>
+            </h1>
+
+            <p class="mt-6 text-base sm:text-lg text-secondaryText leading-relaxed max-w-xl">
+              Temukan koleksi lanyard dan carabiner Telkom University dengan karakter desain yang modern, personal, dan berkelas. Divisualisasikan secara langsung dalam 3D interaktif.
+            </p>
+          </div>
+
+          <div class="mt-10 pt-8 border-t border-borderLight">
+            <div class="flex flex-wrap items-center gap-4">
+              <a href="#koleksi" class="bg-brandRed hover:bg-mainText text-white text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-lg transition-colors">
+                Jelajahi Koleksi
+              </a>
+              <a href="#kustomisasi" class="bg-white hover:bg-secondaryBg text-mainText border border-mainText text-xs font-bold uppercase tracking-widest px-7 py-4 rounded-lg transition-colors">
+                Lihat dalam 3D
+              </a>
+            </div>
+
+            <div class="mt-8 grid grid-cols-3 gap-4 text-xs">
+              <div>
+                <span class="block font-extrabold text-mainText uppercase tracking-wider">Real-Time 3D</span>
+                <span class="text-secondaryText">Three.js WebGL</span>
+              </div>
+              <div>
+                <span class="block font-extrabold text-mainText uppercase tracking-wider">06 Tema Visual</span>
+                <span class="text-secondaryText">3 Lanyard + 3 Carabiner</span>
+              </div>
+              <div>
+                <span class="block font-extrabold text-mainText uppercase tracking-wider">Static Ready</span>
+                <span class="text-secondaryText">GitHub &amp; Vercel Ready</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Interactive 3D Hero Stage -->
+        <div class="lg:col-span-6 bg-secondaryBg relative flex flex-col justify-between min-h-[440px]">
+          <!-- Top Bar -->
+          <div class="p-4 sm:px-6 border-b border-borderLight bg-white/90 backdrop-blur-xs flex items-center justify-between gap-2 z-10">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span class="text-[11px] font-mono uppercase tracking-wider font-semibold text-mainText">
+                HERO 3D STAGE // LANYARD + CARABINER
+              </span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="resetHeroCamera()" class="px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider bg-secondaryBg hover:bg-borderLight text-mainText border border-borderLight rounded transition-colors">
+                Reset Kamera
+              </button>
+            </div>
+          </div>
+
+          <!-- 3D WebGL Canvas Container -->
+          <div id="hero-3d-container" class="w-full h-[390px] sm:h-[460px] lg:flex-1 relative cursor-grab active:cursor-grabbing" aria-label="Kanvas 3D Interaktif Komposisi Lanyard dan Carabiner"></div>
+
+          <!-- Floating Interaction Hint -->
+          <div class="absolute bottom-14 left-4 bg-white/90 backdrop-blur-xs border border-borderLight px-3 py-1.5 rounded text-[11px] text-secondaryText pointer-events-none">
+            Geser (Drag): Putar 360° &bull; Scroll: Zoom
+          </div>
+
+          <!-- Bottom Bar -->
+          <div class="p-4 sm:px-6 border-t border-borderLight bg-white flex flex-wrap items-center justify-between gap-2 text-xs text-secondaryText z-10">
+            <span>Komposisi: <strong class="text-mainText">01 Modern Identity Lanyard &amp; 01 Classic Red Carabiner</strong></span>
+            <a href="#kustomisasi" class="text-brandRed font-bold hover:underline uppercase tracking-wider text-[11px]">
+              Buka Studio Kustomisasi 3D &rarr;
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         C. FEATURED PRODUCTS (KATALOG 6 VARIASI DENGAN HIGH-DPI RENDER)
+         =================================================================== -->
+    <section id="koleksi" class="py-20 border-b border-borderLight bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between pb-10 border-b border-borderLight gap-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-brandRed block mb-2">01 / Katalog Koleksi</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-mainText">Koleksi Lanyard &amp; Carabiner</h2>
+          </div>
+
+          <!-- Category Filter Tabs -->
+          <div class="inline-flex p-1 rounded-lg border border-borderLight bg-secondaryBg self-start md:self-auto" role="tablist">
+            <button onclick="filterCatalog('all')" id="filter-all" class="px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider bg-mainText text-white transition-colors">
+              Semua (06)
+            </button>
+            <button onclick="filterCatalog('lanyard')" id="filter-lanyard" class="px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider text-secondaryText hover:text-mainText transition-colors">
+              Lanyard Collection (03)
+            </button>
+            <button onclick="filterCatalog('carabiner')" id="filter-carabiner" class="px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider text-secondaryText hover:text-mainText transition-colors">
+              Carabiner Collection (03)
+            </button>
+          </div>
+        </div>
+
+        <!-- Product Grid -->
+        <div id="catalog-grid" class="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         D. INTERACTIVE 3D PRODUCT CONFIGURATOR (MAIN FEATURE)
+         =================================================================== -->
+    <section id="kustomisasi" class="py-20 bg-secondaryBg border-b border-borderLight">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="mb-10 flex flex-col lg:flex-row lg:items-end justify-between gap-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-brandRed block mb-2">02 / Studio Interaktif 3D</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-mainText">Konfigurator Produk 3D</h2>
+          </div>
+          <p class="text-sm text-secondaryText max-w-xl">
+            Pilih kategori produk, ganti tema desain secara *real-time*, uji bukaan pegas *gate* pada Carabiner 3D, atau periksa struktur *mesh* dengan mode *wireframe*.
+          </p>
+        </div>
+
+        <div class="bg-white border border-borderLight rounded-xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 shadow-xs">
+          
+          <!-- Left: Large Interactive 3D Viewer & Camera/Mesh Controls -->
+          <div class="lg:col-span-7 border-b lg:border-b-0 lg:border-r border-borderLight flex flex-col justify-between">
+            
+            <!-- Top Viewer Toolbar -->
+            <div class="p-4 sm:px-6 border-b border-borderLight flex flex-wrap items-center justify-between gap-2 bg-white">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-brandRed"></span>
+                <span id="cfg-stage-status" class="text-xs font-mono font-bold uppercase tracking-wider text-mainText">
+                  3D WEBGL // LANYARD 01 MODERN IDENTITY
+                </span>
+              </div>
+
+              <!-- Interactive 3D Action Buttons -->
+              <div class="flex flex-wrap items-center gap-1.5">
+                <button onclick="toggleCarabinerGate()" id="btn-toggle-gate" class="hidden px-3 py-1.5 rounded text-[11px] font-bold uppercase tracking-wider bg-brandRed text-white hover:bg-mainText transition-colors">
+                  Buka / Tutup Gate
+                </button>
+                <button onclick="toggleAutoRotate()" id="btn-autorotate" class="px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-mainText text-white border border-mainText transition-colors">
+                  Auto-Rotate: ON
+                </button>
+                <button onclick="toggleWireframe()" id="btn-wireframe" class="px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-white text-mainText border border-borderLight hover:border-mainText transition-colors">
+                  Wireframe
+                </button>
+                <button onclick="resetCfgCamera()" class="px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-secondaryBg hover:bg-borderLight text-mainText border border-borderLight transition-colors">
+                  Reset View
+                </button>
+              </div>
+            </div>
+
+            <!-- Main 3D Stage -->
+            <div class="relative w-full h-[430px] sm:h-[500px] bg-[#F7F7F7] flex items-center justify-center overflow-hidden">
+              <div id="cfg-3d-container" class="w-full h-full cursor-grab active:cursor-grabbing" aria-label="Konfigurator 3D Interaktif"></div>
+
+              <!-- Overlay Controls Legend -->
+              <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-xs border border-borderLight px-3 py-1.5 rounded text-[11px] text-secondaryText pointer-events-none">
+                Klik Kiri + Geser: Putar Orbit &bull; Scroll: Zoom &bull; Klik Kanan: Pan
+              </div>
+            </div>
+
+            <!-- Bottom Camera Angles & Detail Gallery -->
+            <div class="p-4 sm:p-6 border-t border-borderLight bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-widest text-secondaryText block mb-2">Sudut Kamera Cepat (Camera Presets)</span>
+                <div class="flex flex-wrap items-center gap-2">
+                  <button onclick="setCfgCameraAngle('front')" class="px-3 py-1.5 rounded text-xs font-semibold border border-mainText bg-secondaryBg text-mainText hover:bg-mainText hover:text-white transition-colors">
+                    Tampak Depan
+                  </button>
+                  <button onclick="setCfgCameraAngle('side')" class="px-3 py-1.5 rounded text-xs font-semibold border border-borderLight bg-white text-mainText hover:border-mainText transition-colors">
+                    Perspektif 45°
+                  </button>
+                  <button onclick="setCfgCameraAngle('detail')" class="px-3 py-1.5 rounded text-xs font-semibold border border-borderLight bg-white text-mainText hover:border-mainText transition-colors">
+                    Close-Up Material
+                  </button>
+                </div>
+              </div>
+
+              <!-- Detail Preview Thumbnails -->
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-widest text-secondaryText block mb-2">3 Detail Close-Up Konsep</span>
+                <div id="cfg-detail-thumbs" class="flex items-center gap-2"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Product & Theme Selector Controls -->
+          <div class="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-white">
+            <div>
+              <!-- 1. Product Category Selector -->
+              <div class="mb-6">
+                <label class="block text-[11px] font-bold uppercase tracking-widest text-secondaryText mb-2">
+                  1. Pilih Tipe Produk
+                </label>
+                <div class="grid grid-cols-2 gap-3">
+                  <button onclick="selectCfgCategory('lanyard')" id="cfg-tab-lanyard" class="py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider border border-mainText bg-mainText text-white transition-colors">
+                    Custom Lanyard
+                  </button>
+                  <button onclick="selectCfgCategory('carabiner')" id="cfg-tab-carabiner" class="py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider border border-borderLight bg-white text-mainText hover:border-mainText transition-colors">
+                    Custom Carabiner
+                  </button>
+                </div>
+              </div>
+
+              <!-- 2. Theme Selector (3 Variations per Product) -->
+              <div class="mb-6">
+                <label class="block text-[11px] font-bold uppercase tracking-widest text-secondaryText mb-2">
+                  2. Pilih Karakter &amp; Tema Desain
+                </label>
+                <div id="cfg-theme-list" class="space-y-2.5"></div>
+              </div>
+
+              <!-- Active Theme Details -->
+              <div class="py-5 border-t border-b border-borderLight">
+                <div class="flex items-center justify-between mb-1">
+                  <span id="cfg-active-code" class="text-xs font-mono font-bold uppercase text-brandRed">VARIASI 01 // LANYARD</span>
+                  <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-secondaryBg border border-borderLight text-mainText">3D Procedural Mesh</span>
+                </div>
+                <h3 id="cfg-active-name" class="text-2xl font-extrabold text-mainText tracking-tight">Modern Identity Lanyard</h3>
+                <p id="cfg-active-desc" class="mt-2 text-sm text-secondaryText leading-relaxed"></p>
+
+                <!-- 3. Color Palette Swatches -->
+                <div class="mt-5">
+                  <span class="block text-[11px] font-bold uppercase tracking-widest text-secondaryText mb-2">
+                    3. Palet Warna &amp; Finishing Material
+                  </span>
+                  <div id="cfg-color-swatches" class="flex flex-wrap items-center gap-2"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA Button -->
+            <div class="mt-6">
+              <button onclick="proceedToOrderFromCfg()" class="w-full bg-brandRed hover:bg-mainText text-white text-xs font-bold uppercase tracking-widest py-4 px-6 rounded-lg transition-colors">
+                Pesan / Kustomisasi Konsep Ini &rarr;
+              </button>
+              <p class="mt-3 text-[11px] text-secondaryText leading-normal">
+                *Seluruh geometri dan tekstur 3D dirender secara langsung di dalam *browser* menggunakan Three.js tanpa memerlukan file eksternal, sehingga bebas *error* saat di-*deploy* ke GitHub Pages maupun Vercel.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         E. DESIGN EXPLORATION ("PILIH KARAKTER DESAINMU" + DESIGN BOARD)
+         =================================================================== -->
+    <section id="eksplorasi" class="py-20 border-b border-borderLight bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-brandRed block mb-2">03 / Eksplorasi Desain</span>
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-mainText">Pilih Karakter Desainmu</h2>
+            <p class="mt-2 text-sm text-secondaryText max-w-2xl">
+              Papan referensi desain lengkap untuk keenam konsep Lanyard dan Carabiner Telkom University. Jika Anda menaruh `design-board.png` di repositori atau memilihnya dari komputer, gambar asli akan langsung ditampilkan di bawah ini.
+            </p>
+          </div>
+
+          <label for="board-upload" class="cursor-pointer shrink-0 bg-mainText hover:bg-brandRed text-white text-xs font-bold uppercase tracking-wider px-5 py-3.5 rounded-lg transition-colors inline-block">
+            Muat File Gambar Design Board (.PNG)
+            <input type="file" id="board-upload" accept="image/*" class="hidden" onchange="handleBoardFileUpload(event)" />
+          </label>
+        </div>
+
+        <!-- Reference Design Board Container -->
+        <div class="bg-secondaryBg border border-borderLight rounded-xl p-4 sm:p-8">
+          <!-- Optional user-loaded / repo design-board.png -->
+          <img
+            id="user-design-board-img"
+            src="./design-board.png"
+            alt="Telkom University Design Board"
+            class="w-full h-auto rounded-lg object-contain hidden mb-6 border border-borderLight bg-white"
+            onload="this.classList.remove('hidden');"
+            onerror="this.classList.add('hidden');"
+          />
+
+          <!-- Built-in High-Resolution Interactive Design Board Grid -->
+          <div id="builtin-design-board" class="bg-white border border-borderLight rounded-xl p-6 sm:p-8">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-6 mb-8 border-b border-borderLight">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="w-5 h-1 bg-brandRed"></span>
+                  <span class="text-[11px] font-bold uppercase tracking-widest text-secondaryText">DESIGN VARIATION BOARD</span>
+                </div>
+                <h3 class="text-2xl font-extrabold tracking-tight text-mainText mt-1">LANYARD &amp; CARABINER — TELKOM UNIVERSITY</h3>
+              </div>
+              <span class="text-xs font-mono text-secondaryText">KLIK KARTU UNTUK MEMBUKA DI STUDIO 3D</span>
+            </div>
+
+            <div id="board-cards-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         F. PRODUCT DETAILS & G. CUSTOM INQUIRY FORM
+         =================================================================== -->
+    <section id="tentang" class="py-20 bg-secondaryBg border-b border-borderLight">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12">
+        
+        <!-- Left: Realistic Product Details & Specifications -->
+        <div class="lg:col-span-5 space-y-6">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-widest text-brandRed block mb-2">04 / Spesifikasi Teknis</span>
+            <h2 class="text-3xl font-extrabold tracking-tight text-mainText">Material &amp; Opsi Produksi</h2>
+            <p class="mt-3 text-sm text-secondaryText leading-relaxed">
+              Dirancang untuk kebutuhan mahasiswa, dosen, staf, kepanitiaan acara, dan *merchandise* komunitas Telkom University.
+            </p>
+          </div>
+
+          <div class="space-y-4">
+            <div class="bg-white border border-borderLight rounded-xl p-5">
+              <span class="text-[11px] font-mono font-bold uppercase text-brandRed">01 / MATERIAL UTAMA</span>
+              <h3 class="text-sm font-extrabold text-mainText mt-1">Polyester Tissue &amp; Aluminium Alloy</h3>
+              <p class="text-xs text-secondaryText mt-1.5 leading-relaxed">
+                Lanyard menggunakan bahan polyester tissue lembut berkerapatan tinggi. Carabiner menggunakan bodi aluminium ringan dengan *anodized*, *matte*, atau *brushed finish*.
+              </p>
+            </div>
+
+            <div class="bg-white border border-borderLight rounded-xl p-5">
+              <span class="text-[11px] font-mono font-bold uppercase text-brandRed">02 / TEKNIK PENCETAKAN</span>
+              <h3 class="text-sm font-extrabold text-mainText mt-1">Sublimasi 2 Sisi &amp; Laser Engraving</h3>
+              <p class="text-xs text-secondaryText mt-1.5 leading-relaxed">
+                Pencetakan sublimasi digital *full-color* dua sisi pada pita lanyard, serta *laser marking* / cetak UV presisi tinggi pada permukaan samping carabiner.
+              </p>
+            </div>
+
+            <div class="bg-white border border-borderLight rounded-xl p-5">
+              <span class="text-[11px] font-mono font-bold uppercase text-brandRed">03 / KOMPONEN HARDWARE</span>
+              <h3 class="text-sm font-extrabold text-mainText mt-1">Safety Buckle &amp; Swivel Metal Hook</h3>
+              <p class="text-xs text-secondaryText mt-1.5 leading-relaxed">
+                Dilengkapi *quick-release buckle* hitam berbahan ABS tangguh dan pengait besi *oval swivel hook* hitam yang dapat berputar 360 derajat.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Functional Custom Inquiry Form -->
+        <div id="pemesanan" class="lg:col-span-7 bg-white border border-borderLight rounded-xl p-6 sm:p-10 shadow-xs">
+          <span class="text-xs font-bold uppercase tracking-widest text-brandRed block mb-1">05 / Formulir Kustomisasi</span>
+          <h3 class="text-2xl font-extrabold text-mainText mb-2">Ajukan Permintaan Merchandise</h3>
+          <p class="text-xs text-secondaryText mb-6">
+            Isi formulir di bawah ini untuk membuat ringkasan spesifikasi pemesanan kustomisasi unit, fakultas, atau kepanitiaan.
+          </p>
+
+          <form id="inquiry-form" onsubmit="handleInquirySubmit(event)" class="space-y-5" novalidate>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label for="inq-name" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Nama Lengkap *</label>
+                <input type="text" id="inq-name" required placeholder="Contoh: Raka Pratama" class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderLight text-sm text-mainText focus:outline-none focus:bg-white focus:border-mainText" />
+                <p id="err-name" class="hidden text-xs text-brandRed mt-1">Nama lengkap wajib diisi.</p>
+              </div>
+              <div>
+                <label for="inq-email" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Email Institusi / Pribadi *</label>
+                <input type="email" id="inq-email" required placeholder="nama@telkomuniversity.ac.id" class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderLight text-sm text-mainText focus:outline-none focus:bg-white focus:border-mainText" />
+                <p id="err-email" class="hidden text-xs text-brandRed mt-1">Masukkan format email yang valid.</p>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+              <div>
+                <label for="inq-type" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Tipe Produk *</label>
+                <select id="inq-type" onchange="syncFormThemeOptions()" class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderLight text-sm font-medium text-mainText focus:outline-none focus:bg-white focus:border-mainText">
+                  <option value="lanyard">Custom Lanyard</option>
+                  <option value="carabiner">Custom Carabiner</option>
+                  <option value="bundle">Bundle (Lanyard + Carabiner)</option>
+                </select>
+              </div>
+              <div>
+                <label for="inq-design" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Konsep Desain *</label>
+                <select id="inq-design" class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderLight text-sm font-medium text-mainText focus:outline-none focus:bg-white focus:border-mainText">
+                  <option value="01 - Modern Identity Lanyard">01 - Modern Identity Lanyard</option>
+                  <option value="02 - Tech & Innovation Lanyard">02 - Tech &amp; Innovation Lanyard</option>
+                  <option value="03 - Heritage & Campus Life Lanyard">03 - Heritage &amp; Campus Life Lanyard</option>
+                  <option value="01 - Classic Red Carabiner">01 - Classic Red Carabiner</option>
+                  <option value="02 - Black Premium Carabiner">02 - Black Premium Carabiner</option>
+                  <option value="03 - Silver Minimal Carabiner">03 - Silver Minimal Carabiner</option>
+                </select>
+              </div>
+              <div>
+                <label for="inq-qty" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Jumlah (Pcs) *</label>
+                <input type="number" id="inq-qty" min="1" value="50" required class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderLight text-sm text-mainText focus:outline-none focus:bg-white focus:border-mainText" />
+                <p id="err-qty" class="hidden text-xs text-brandRed mt-1">Minimal 1 pcs.</p>
+              </div>
+            </div>
+
+            <div>
+              <label for="inq-notes" class="block text-xs font-bold uppercase tracking-wider text-mainText mb-2">Kebutuhan Tambahan (Opsional)</label>
+              <textarea id="inq-notes" rows="2" placeholder="Tuliskan detail tambahan seperti penambahan nama fakultas, himpunan, atau ID card holder..." class="w-full px-4 py-3 rounded-lg bg-secondaryBg border border-borderLight text-sm text-mainText focus:outline-none focus:bg-white focus:border-mainText"></textarea>
+            </div>
+
+            <button type="submit" class="w-full bg-mainText hover:bg-brandRed text-white text-xs font-bold uppercase tracking-widest py-4 px-6 rounded-lg transition-colors">
+              Buat Ringkasan Permintaan (Validasi Klien)
+            </button>
+
+            <!-- Validated Demo Feedback Box -->
+            <div id="inq-feedback" class="hidden p-5 rounded-xl bg-secondaryBg border border-mainText space-y-2">
+              <div class="flex items-center justify-between border-b border-borderLight pb-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-brandRed">Permintaan Tervalidasi (Mode Demo Statis)</span>
+                <span id="inq-date" class="text-[11px] font-mono text-secondaryText"></span>
+              </div>
+              <div id="inq-summary-text" class="text-xs text-mainText space-y-1 pt-1"></div>
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================================================================
+       H. FOOTER
+       =================================================================== -->
+  <footer class="bg-white py-12 border-t border-borderLight text-xs text-secondaryText">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="w-7 h-7 rounded bg-brandRed text-white font-extrabold flex items-center justify-center text-xs">TU</span>
+        <span class="font-bold text-mainText">Telkom University — 3D Merchandise Showcase</span>
+      </div>
+      <div>
+        <span>Single-File HTML + Three.js WebGL &bull; Siap Deploy di GitHub Pages &amp; Vercel</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================================================================
+       APPLICATION LOGIC: PRODUCT DATA, HIGH-DPI TEXTURES & THREE.JS 3D
+       =================================================================== -->
+  <script>
+    // 1. DATA KE-6 KONSEP PRODUK
+    const PRODUCTS = [
+      {
+        id: 'lanyard-01',
+        category: 'lanyard',
+        code: '01',
+        theme: 'MODERN IDENTITY',
+        name: 'Modern Identity Lanyard',
+        formOption: '01 - Modern Identity Lanyard',
+        shortDesc: 'Desain modern dengan identitas Telkom University yang kuat, cocok untuk penggunaan sehari-hari.',
+        fullDesc: 'Memadukan pola poligon geometris tegas berwarna merah Telkom, hitam, abu-abu, dan putih bersih dengan logo Telkom University serta komponen buckle hitam pelepas cepat.',
+        colors: [
+          { name: 'Telkom Red', hex: '#E31E24' },
+          { name: 'Jet Black', hex: '#262626' },
+          { name: 'Steel Grey', hex: '#8C8C8C' },
+          { name: 'Pure White', hex: '#FFFFFF' }
+        ],
+        variant: 'modern'
+      },
+      {
+        id: 'lanyard-02',
+        category: 'lanyard',
+        code: '02',
+        theme: 'TECH & INNOVATION',
+        name: 'Tech & Innovation Lanyard',
+        formOption: '02 - Tech & Innovation Lanyard',
+        shortDesc: 'Tema teknologi dengan elemen grafis futuristik yang merepresentasikan inovasi Telkom University.',
+        fullDesc: 'Didominasi warna hitam pekat dengan aksen garis sirkuit merah futuristik, logo Telkom University kontras, serta tipografi #Innovation for a Better Future.',
+        colors: [
+          { name: 'Circuit Red', hex: '#E31E24' },
+          { name: 'Obsidian Black', hex: '#141414' },
+          { name: 'Carbon Grey', hex: '#404040' },
+          { name: 'Silver Mist', hex: '#A3A3A3' }
+        ],
+        variant: 'tech'
+      },
+      {
+        id: 'lanyard-03',
+        category: 'lanyard',
+        code: '03',
+        theme: 'HERITAGE & CAMPUS LIFE',
+        name: 'Heritage & Campus Life Lanyard',
+        formOption: '03 - Heritage & Campus Life Lanyard',
+        shortDesc: 'Mengangkat suasana kampus dan nilai keberagaman dengan ilustrasi khas Telkom University.',
+        fullDesc: 'Menghadirkan nuansa krem hangat (warm cream) dan merah marun dengan ilustrasi arsitektur gedung kampus ikonik serta motif ornamen empat kelopak.',
+        colors: [
+          { name: 'Muted Red', hex: '#B92B27' },
+          { name: 'Deep Maroon', hex: '#6E1E2A' },
+          { name: 'Warm Taupe', hex: '#9E9A95' },
+          { name: 'Warm Cream', hex: '#EFECE6' }
+        ],
+        variant: 'heritage'
+      },
+      {
+        id: 'carabiner-01',
+        category: 'carabiner',
+        code: '01',
+        theme: 'CLASSIC RED',
+        name: 'Classic Red Carabiner',
+        formOption: '01 - Classic Red Carabiner',
+        shortDesc: 'Desain klasik dengan warna merah khas Telkom University, simple dan elegan.',
+        fullDesc: 'Bodi aluminium berfinishing glossy anodized-red khas Telkom University, dipadukan dengan gerbang pegas (spring gate) hitam metalik dan grafir logo putih.',
+        colors: [
+          { name: 'Anodized Red', hex: '#E31E24' },
+          { name: 'Gate Black', hex: '#171717' },
+          { name: 'Silver Pin', hex: '#A3A3A3' }
+        ],
+        variant: 'red',
+        bodyHex: 0xD91920,
+        metalness: 0.82,
+        roughness: 0.20
+      },
+      {
+        id: 'carabiner-02',
+        category: 'carabiner',
+        code: '02',
+        theme: 'BLACK PREMIUM',
+        name: 'Black Premium Carabiner',
+        formOption: '02 - Black Premium Carabiner',
+        shortDesc: 'Tampilan premium dengan warna hitam dan aksen merah, memberikan kesan modern dan profesional.',
+        fullDesc: 'Finishing matte/satin black metal berkesan industrial dengan aksen garis chevron merah-abu presisi pada bodi bawah dan branding Telkom University putih.',
+        colors: [
+          { name: 'Satin Black', hex: '#1F1F1F' },
+          { name: 'Chevron Red', hex: '#E31E24' },
+          { name: 'Alloy Grey', hex: '#A3A3A3' }
+        ],
+        variant: 'black',
+        bodyHex: 0x222222,
+        metalness: 0.68,
+        roughness: 0.34
+      },
+      {
+        id: 'carabiner-03',
+        category: 'carabiner',
+        code: '03',
+        theme: 'SILVER MINIMAL',
+        name: 'Silver Minimal Carabiner',
+        formOption: '03 - Silver Minimal Carabiner',
+        shortDesc: 'Desain minimalis dengan warna silver yang serbaguna, cocok untuk berbagai kebutuhan.',
+        fullDesc: 'Permukaan brushed silver metal yang bersih dan minimalis, dilengkapi gerbang pengunci hitam kontras dan ukiran logo Telkom University berwarna hitam.',
+        colors: [
+          { name: 'Brushed Silver', hex: '#C4C7CE' },
+          { name: 'Matte Black', hex: '#262626' },
+          { name: 'Light Chrome', hex: '#E2E4E9' }
+        ],
+        variant: 'silver',
+        bodyHex: 0xC8CCD2,
+        metalness: 0.90,
+        roughness: 0.18
+      }
+    ];
+
+    let currentCatalogFilter = 'all';
+    let activeCfgProduct = PRODUCTS[0];
+    let isAutoRotate = true;
+    let isWireframe = false;
+    let isCarabinerGateOpen = false;
+    let cfgGatePivot = null; // Referensi pivot gate carabiner untuk animasi buka/tutup
+
+    // 2. GENERATOR TEKSTUR KANVAS RESOLUSI TINGGI UNTUK MESH 3D LANYARD
+    function createLanyard3DTexture(variant) {
+      const c = document.createElement('canvas');
+      c.width = 1024;
+      c.height = 256;
+      const ctx = c.getContext('2d');
+
+      if (variant === 'modern') {
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, 1024, 256);
+        for (let x = 0; x < 1024; x += 180) {
+          ctx.fillStyle = '#E31E24';
+          ctx.beginPath();
+          ctx.moveTo(x, 0); ctx.lineTo(x + 100, 0); ctx.lineTo(x + 50, 256); ctx.lineTo(x - 30, 256);
+          ctx.closePath(); ctx.fill();
+
+          ctx.fillStyle = '#222222';
+          ctx.beginPath();
+          ctx.moveTo(x + 100, 0); ctx.lineTo(x + 145, 0); ctx.lineTo(x + 105, 256); ctx.lineTo(x + 50, 256);
+          ctx.closePath(); ctx.fill();
+        }
+        ctx.fillStyle = '#171717';
+      } else if (variant === 'tech') {
+        ctx.fillStyle = '#121212';
+        ctx.fillRect(0, 0, 1024, 256);
+        ctx.strokeStyle = '#E31E24';
+        ctx.lineWidth = 6;
+        for (let x = 20; x < 1024; x += 150) {
+          ctx.beginPath();
+          ctx.moveTo(x, 15); ctx.lineTo(x + 55, 95); ctx.lineTo(x + 35, 185); ctx.lineTo(x + 95, 240);
+          ctx.stroke();
+          ctx.fillStyle = '#E31E24';
+          ctx.beginPath(); ctx.arc(x + 55, 95, 7, 0, Math.PI * 2); ctx.fill();
+        }
+        ctx.fillStyle = '#FFFFFF';
+      } else {
+        ctx.fillStyle = '#EFECE6';
+        ctx.fillRect(0, 0, 1024, 256);
+        for (let x = 30; x < 1024; x += 200) {
+          ctx.fillStyle = '#B92B27';
+          ctx.fillRect(x, 0, 60, 256);
+          ctx.strokeStyle = '#6E1E2A';
+          ctx.lineWidth = 5;
+          ctx.strokeRect(x + 80, 40, 80, 176);
+        }
+        ctx.fillStyle = '#171717';
+      }
+
+      // Cetak Teks Telkom University di Sepanjang Pita 3D
+      ctx.font = '800 44px Inter, sans-serif';
+      ctx.fillText('Telkom University', 110, 145);
+      ctx.fillText('Telkom University', 590, 145);
+
+      const tex = new THREE.CanvasTexture(c);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.ClampToEdgeWrapping;
+      tex.repeat.set(2, 1);
+      tex.anisotropy = 4;
+      return tex;
+    }
+
+    // 3. GENERATOR THUMBNAIL DETAIL CLOSE-UP (3 KOTAK SAMPING SEPERTI DESIGN BOARD)
+    function createDetailThumbSVG(product, index) {
+      const c1 = product.colors[0].hex;
+      const c2 = product.colors[1].hex;
+      if (product.category === 'lanyard') {
+        if (index === 0) {
+          return `<svg viewBox="0 0 80 80" class="w-full h-full"><rect width="80" height="80" fill="${product.variant === 'tech' ? '#171717' : '#F5F5F5'}"/><path d="M22 20 C32 20, 38 24, 40 28 C42 24, 48 20, 58 20 V30 C48 30, 42 34, 40 38 C38 34, 32 30, 22 30 Z" fill="#E31E24"/><path d="M26 42 H36 V54 C36 56, 44 56, 44 54 V42 H54 V54 C54 63, 26 63, 26 54 Z" fill="${product.variant === 'tech' ? '#FFFFFF' : '#262626'}"/></svg>`;
+        } else if (index === 1) {
+          return `<svg viewBox="0 0 80 80" class="w-full h-full"><rect width="80" height="80" fill="${product.variant === 'tech' ? '#171717' : '#FFFFFF'}"/><rect y="0" width="80" height="22" fill="${c1}"/><text x="10" y="50" fill="${product.variant === 'tech' ? '#FFFFFF' : '#171717'}" font-size="11" font-weight="800" font-family="Inter">Telkom</text><text x="10" y="63" fill="${product.variant === 'tech' ? '#D4D4D4' : '#525252'}" font-size="10" font-weight="700" font-family="Inter">University</text></svg>`;
+        } else {
+          return `<svg viewBox="0 0 80 80" class="w-full h-full"><rect width="80" height="80" fill="${c2}"/><polygon points="0,0 50,0 25,80 0,80" fill="${c1}"/><path d="M15 15 L65 65 M65 15 L15 65" stroke="#FFFFFF" stroke-width="3"/></svg>`;
+        }
+      } else {
+        const bg = product.colors[0].hex;
+        const fg = product.variant === 'silver' ? '#171717' : '#FFFFFF';
+        if (index === 0) {
+          return `<svg viewBox="0 0 80 80" class="w-full h-full"><rect width="80" height="80" fill="#262626"/><line x1="15" y1="65" x2="65" y2="15" stroke="#141414" stroke-width="20" stroke-linecap="round"/><circle cx="40" cy="40" r="5" fill="#A3A3A3"/></svg>`;
+        } else if (index === 1) {
+          return `<svg viewBox="0 0 80 80" class="w-full h-full"><rect width="80" height="80" fill="${bg}"/><text x="10" y="42" fill="${fg}" font-size="11" font-weight="800" font-family="Inter">Telkom</text><text x="10" y="55" fill="${fg}" font-size="9" font-weight="700" font-family="Inter">University</text></svg>`;
+        } else {
+          return `<svg viewBox="0 0 80 80" class="w-full h-full"><rect width="80" height="80" fill="${bg}"/><path d="M20 55 L40 30 L60 55" stroke="#E31E24" stroke-width="6" fill="none"/><circle cx="40" cy="25" r="6" fill="${fg}"/></svg>`;
+        }
+      }
+    }
+
+    // 4. GENERATOR GAMBAR KARTU PRODUK + 3 THUMBNAIL SAMPING (MIRIP DESIGN BOARD ASLI)
+    function createCompositeCardSVG(product) {
+      const isLanyard = product.category === 'lanyard';
+      const strapFill = product.variant === 'tech' ? '#171717' : product.variant === 'heritage' ? '#EFECE6' : '#FFFFFF';
+      const accentFill = product.variant === 'heritage' ? '#B92B27' : '#E31E24';
+      const textFill = product.variant === 'tech' ? '#FFFFFF' : '#171717';
+      const carabinerColor = product.colors[0].hex;
+      const carabinerText = product.variant === 'silver' ? '#171717' : '#FFFFFF';
+
+      return `
+        <div class="grid grid-cols-12 gap-3 items-center bg-[#F6F6F6] p-4 rounded-lg border border-borderLight">
+          <!-- Main Product Illustration (Left 8 Cols) -->
+          <div class="col-span-8 h-48 flex items-center justify-center bg-white rounded border border-borderLight p-2">
+            ${isLanyard ? `
+              <svg viewBox="0 0 240 200" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M95 20 C115 8, 145 8, 165 20" stroke="${accentFill}" stroke-width="16" stroke-linecap="round"/>
+                <path d="M88 22 L110 124 L128 124 L108 22 Z" fill="${accentFill}"/>
+                <path d="M152 22 L120 124 L144 124 L174 22 Z" fill="${strapFill}" stroke="#D4D4D4" stroke-width="1"/>
+                ${product.variant === 'modern' ? `
+                  <polygon points="146,35 168,35 158,68" fill="#E31E24"/>
+                  <polygon points="134,76 156,76 146,108" fill="#262626"/>
+                ` : product.variant === 'tech' ? `
+                  <path d="M156 30 L142 64 L152 76 L134 115" stroke="#E31E24" stroke-width="2.5" stroke-linecap="round"/>
+                ` : `
+                  <circle cx="152" cy="54" r="6" fill="#B92B27"/>
+                  <rect x="136" y="78" width="14" height="20" stroke="#6E1E2A" stroke-width="2"/>
+                `}
+                <text x="145" y="92" fill="${textFill}" font-size="7.5" font-weight="800" transform="rotate(-73 145 92)" font-family="Inter, sans-serif">Telkom University</text>
+                <rect x="112" y="122" width="30" height="20" rx="3" fill="#171717"/>
+                <rect x="116" y="142" width="22" height="16" rx="2" fill="${accentFill}"/>
+                <circle cx="127" cy="176" r="12" stroke="#262626" stroke-width="4.5"/>
+              </svg>
+            ` : `
+              <svg viewBox="0 0 240 200" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g transform="rotate(28 120 100)">
+                  <path d="M88 46 A34 34 0 1 1 154 46 L164 138 A44 44 0 1 1 78 138 L82 114" stroke="${carabinerColor}" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+                  <line x1="86" y1="58" x2="80" y2="118" stroke="#171717" stroke-width="14" stroke-linecap="round"/>
+                  <circle cx="86" cy="60" r="3" fill="#D4D4D4"/>
+                  <circle cx="80" cy="116" r="3" fill="#D4D4D4"/>
+                  ${product.variant === 'black' ? `<path d="M152 134 L160 124 L168 134" stroke="#E31E24" stroke-width="3.5" stroke-linecap="round"/>` : ''}
+                  <text x="163" y="122" fill="${carabinerText}" font-size="8" font-weight="800" transform="rotate(-84 163 122)" font-family="Inter, sans-serif">Telkom University</text>
+                </g>
+              </svg>
+            `}
+          </div>
+          <!-- 3 Macro Detail Thumbnails (Right 4 Cols) -->
+          <div class="col-span-4 flex flex-col gap-2">
+            <div class="h-14 rounded overflow-hidden border border-borderLight">${createDetailThumbSVG(product, 0)}</div>
+            <div class="h-14 rounded overflow-hidden border border-borderLight">${createDetailThumbSVG(product, 1)}</div>
+            <div class="h-14 rounded overflow-hidden border border-borderLight">${createDetailThumbSVG(product, 2)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    // 5. THREE.JS 3D MESH BUILDERS (GENUINE 3D GEOMETRY)
+    function buildLanyard3DGroup(product) {
+      const group = new THREE.Group();
+
+      // 3D Neck Strap Loop menggunakan CatmullRomCurve3
+      const curvePts = [
+        new THREE.Vector3(0, -1.25, 0),
+        new THREE.Vector3(0.55, 0.08, 0.12),
+        new THREE.Vector3(0.72, 1.32, 0.04),
+        new THREE.Vector3(0, 1.82, -0.14),
+        new THREE.Vector3(-0.72, 1.32, 0.04),
+        new THREE.Vector3(-0.55, 0.08, 0.12),
+        new THREE.Vector3(0, -1.25, 0)
+      ];
+      const curve = new THREE.CatmullRomCurve3(curvePts, true);
+      const strapGeo = new THREE.TubeGeometry(curve, 110, 0.16, 14, true);
+      strapGeo.scale(1, 1, 0.22); // Pipihkan agar berbentuk pita kain
+
+      const strapMat = new THREE.MeshStandardMaterial({
+        map: createLanyard3DTexture(product.variant),
+        roughness: 0.62,
+        metalness: 0.08,
+        wireframe: isWireframe
+      });
+      group.add(new THREE.Mesh(strapGeo, strapMat));
+
+      // Safety Quick-Release Buckle Hitam
+      const buckleGeo = new THREE.BoxGeometry(0.46, 0.42, 0.16);
+      const buckleMat = new THREE.MeshStandardMaterial({
+        color: 0x171717,
+        roughness: 0.35,
+        metalness: 0.2,
+        wireframe: isWireframe
+      });
+      const buckle = new THREE.Mesh(buckleGeo, buckleMat);
+      buckle.position.set(0, -1.35, 0);
+      group.add(buckle);
+
+      // Lower Fabric Tab di bawah Buckle
+      const tabColor = product.variant === 'tech' ? 0x171717 : product.variant === 'heritage' ? 0xB92B27 : 0xE31E24;
+      const tabGeo = new THREE.BoxGeometry(0.32, 0.28, 0.08);
+      const tabMat = new THREE.MeshStandardMaterial({ color: tabColor, roughness: 0.6, wireframe: isWireframe });
+      const tab = new THREE.Mesh(tabGeo, tabMat);
+      tab.position.set(0, -1.66, 0);
+      group.add(tab);
+
+      // Metal Swivel Clasp Ring
+      const hookGeo = new THREE.TorusGeometry(0.22, 0.045, 16, 36);
+      const hookMat = new THREE.MeshStandardMaterial({
+        color: 0x222222,
+        metalness: 0.88,
+        roughness: 0.22,
+        wireframe: isWireframe
+      });
+      const hook = new THREE.Mesh(hookGeo, hookMat);
+      hook.position.set(0, -1.98, 0);
+      group.add(hook);
+
+      return { group, gatePivot: null };
+    }
+
+    function buildCarabiner3DGroup(product) {
+      const group = new THREE.Group();
+
+      // Main Pear-Shaped Metallic Frame
+      const frameGeo = new THREE.TorusGeometry(1.12, 0.21, 30, 76, Math.PI * 1.66);
+      frameGeo.scale(0.76, 1.25, 0.86);
+      const frameMat = new THREE.MeshStandardMaterial({
+        color: product.bodyHex,
+        metalness: product.metalness,
+        roughness: product.roughness,
+        wireframe: isWireframe
+      });
+      const frameMesh = new THREE.Mesh(frameGeo, frameMat);
+      frameMesh.rotation.z = Math.PI * 0.67;
+      group.add(frameMesh);
+
+      // Pivot Group untuk Spring Gate Hitam agar bisa animasi Buka/Tutup
+      const gatePivot = new THREE.Group();
+      gatePivot.position.set(-0.80, -0.52, 0); // Titik engsel bawah
+
+      const gateGeo = new THREE.CylinderGeometry(0.145, 0.145, 1.36, 24);
+      const gateMat = new THREE.MeshStandardMaterial({
+        color: 0x151515,
+        metalness: 0.55,
+        roughness: 0.35,
+        wireframe: isWireframe
+      });
+      const gateMesh = new THREE.Mesh(gateGeo, gateMat);
+      gateMesh.position.set(0.03, 0.55, 0);
+      gateMesh.rotation.z = -0.06;
+      gatePivot.add(gateMesh);
+
+      // Engsel Pin Logam Perak
+      const pinGeo = new THREE.CylinderGeometry(0.05, 0.05, 0.34, 16);
+      const pinMat = new THREE.MeshStandardMaterial({ color: 0xD4D4D4, metalness: 0.9, roughness: 0.18, wireframe: isWireframe });
+      const botPin = new THREE.Mesh(pinGeo, pinMat);
+      botPin.rotation.x = Math.PI / 2;
+      gatePivot.add(botPin);
+
+      // Set rotasi awal gate (terbuka atau tertutup)
+      gatePivot.rotation.z = isCarabinerGateOpen ? -0.48 : 0;
+      group.add(gatePivot);
+
+      // Aksen Garis Chevron Merah pada Black Premium Carabiner
+      if (product.variant === 'black') {
+        const ringGeo = new THREE.TorusGeometry(0.22, 0.025, 16, 32);
+        const ringMat = new THREE.MeshStandardMaterial({ color: 0xE31E24, metalness: 0.5, roughness: 0.3, wireframe: isWireframe });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.position.set(0.66, -0.66, 0);
+        ring.rotation.x = Math.PI / 2.3;
+        group.add(ring);
+      }
+
+      group.rotation.z = -0.25;
+      return { group, gatePivot };
+    }
+
+    // 6. INISIALISASI SCENE THREE.JS (HERO & CONFIGURATOR)
+    let heroScene, heroCamera, heroRenderer, heroControls, heroRootGroup;
+    let cfgScene, cfgCamera, cfgRenderer, cfgControls, cfgRootGroup;
+
+    function initThreeScenes() {
+      // --- A. HERO 3D SCENE ---
+      const heroContainer = document.getElementById('hero-3d-container');
+      heroScene = new THREE.Scene();
+      heroScene.background = new THREE.Color(0xF5F5F5);
+
+      heroCamera = new THREE.PerspectiveCamera(38, heroContainer.clientWidth / heroContainer.clientHeight, 0.1, 100);
+      heroCamera.position.set(0, 0.1, 5.8);
+
+      heroRenderer = new THREE.WebGLRenderer({ antialias: true });
+      heroRenderer.setSize(heroContainer.clientWidth, heroContainer.clientHeight);
+      heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      heroContainer.innerHTML = '';
+      heroContainer.appendChild(heroRenderer.domElement);
+
+      heroControls = new THREE.OrbitControls(heroCamera, heroRenderer.domElement);
+      heroControls.enableDamping = true;
+      heroControls.minDistance = 3.2;
+      heroControls.maxDistance = 8.5;
+
+      // Studio Lighting Hero
+      heroScene.add(new THREE.AmbientLight(0xffffff, 0.85));
+      const hKey = new THREE.DirectionalLight(0xffffff, 1.2);
+      hKey.position.set(4, 6, 5);
+      heroScene.add(hKey);
+      const hRim = new THREE.DirectionalLight(0xffffff, 0.6);
+      hRim.position.set(-4, -3, -4);
+      heroScene.add(hRim);
+
+      heroRootGroup = new THREE.Group();
+      const heroLanyard = buildLanyard3DGroup(PRODUCTS[0]).group;
+      heroLanyard.position.set(-0.92, 0.12, 0);
+      heroLanyard.scale.setScalar(0.82);
+
+      const heroCarabiner = buildCarabiner3DGroup(PRODUCTS[3]).group;
+      heroCarabiner.position.set(1.02, -0.08, 0.2);
+      heroCarabiner.scale.setScalar(0.82);
+
+      heroRootGroup.add(heroLanyard, heroCarabiner);
+      heroScene.add(heroRootGroup);
+
+      // --- B. CONFIGURATOR 3D SCENE ---
+      const cfgContainer = document.getElementById('cfg-3d-container');
+      cfgScene = new THREE.Scene();
+      cfgScene.background = new THREE.Color(0xF7F7F7);
+
+      cfgCamera = new THREE.PerspectiveCamera(38, cfgContainer.clientWidth / cfgContainer.clientHeight, 0.1, 100);
+      cfgCamera.position.set(0, 0.1, 5.0);
+
+      cfgRenderer = new THREE.WebGLRenderer({ antialias: true });
+      cfgRenderer.setSize(cfgContainer.clientWidth, cfgContainer.clientHeight);
+      cfgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      cfgContainer.innerHTML = '';
+      cfgContainer.appendChild(cfgRenderer.domElement);
+
+      cfgControls = new THREE.OrbitControls(cfgCamera, cfgRenderer.domElement);
+      cfgControls.enableDamping = true;
+      cfgControls.minDistance = 2.5;
+      cfgControls.maxDistance = 8.5;
+
+      cfgScene.add(new THREE.AmbientLight(0xffffff, 0.85));
+      const cKey = new THREE.DirectionalLight(0xffffff, 1.25);
+      cKey.position.set(5, 7, 6);
+      cfgScene.add(cKey);
+      const cFill = new THREE.DirectionalLight(0xffffff, 0.65);
+      cFill.position.set(-5, -2, -4);
+      cfgScene.add(cFill);
+
+      cfgRootGroup = new THREE.Group();
+      cfgScene.add(cfgRootGroup);
+
+      rebuildConfiguratorMesh();
+    }
+
+    function rebuildConfiguratorMesh() {
+      if (!cfgRootGroup) return;
+      while (cfgRootGroup.children.length > 0) {
+        cfgRootGroup.remove(cfgRootGroup.children[0]);
+      }
+      if (activeCfgProduct.category === 'lanyard') {
+        const { group } = buildLanyard3DGroup(activeCfgProduct);
+        cfgGatePivot = null;
+        cfgRootGroup.add(group);
+      } else {
+        const { group, gatePivot } = buildCarabiner3DGroup(activeCfgProduct);
+        cfgGatePivot = gatePivot;
+        cfgRootGroup.add(group);
+      }
+    }
+
+    // 7. KONTROL INTERAKTIF 3D & UI KONFIGURATOR
+    function selectCfgCategory(category) {
+      const tabL = document.getElementById('cfg-tab-lanyard');
+      const tabC = document.getElementById('cfg-tab-carabiner');
+      const gateBtn = document.getElementById('btn-toggle-gate');
+
+      if (category === 'lanyard') {
+        tabL.className = 'py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider border border-mainText bg-mainText text-white transition-colors';
+        tabC.className = 'py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider border border-borderLight bg-white text-mainText hover:border-mainText transition-colors';
+        gateBtn.classList.add('hidden');
+      } else {
+        tabC.className = 'py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider border border-mainText bg-mainText text-white transition-colors';
+        tabL.className = 'py-3 px-4 rounded-lg text-xs font-bold uppercase tracking-wider border border-borderLight bg-white text-mainText hover:border-mainText transition-colors';
+        gateBtn.classList.remove('hidden');
+      }
+
+      const firstItem = PRODUCTS.find(p => p.category === category);
+      if (firstItem) selectCfgProduct(firstItem.id);
+    }
+
+    function selectCfgProduct(productId) {
+      const product = PRODUCTS.find(p => p.id === productId);
+      if (!product) return;
+      activeCfgProduct = product;
+
+      // Render daftar tombol tema untuk kategori aktif
+      const sameCategory = PRODUCTS.filter(p => p.category === product.category);
+      document.getElementById('cfg-theme-list').innerHTML = sameCategory.map(item => {
+        const active = item.id === product.id;
+        return `
+          <button onclick="selectCfgProduct('${item.id}')" class="w-full p-3.5 rounded-lg text-left border ${active ? 'border-brandRed bg-secondaryBg' : 'border-borderLight bg-white hover:border-mainText'} flex items-center justify-between transition-colors">
+            <div>
+              <span class="text-[10px] font-mono font-bold uppercase ${active ? 'text-brandRed' : 'text-secondaryText'}">VARIASI ${item.code}</span>
+              <span class="block text-xs font-extrabold text-mainText mt-0.5">${item.theme}</span>
+            </div>
+            <span class="text-[11px] font-bold uppercase ${active ? 'text-brandRed' : 'text-secondaryText'}">${active ? 'Aktif' : 'Pilih'}</span>
+          </button>
+        `;
+      }).join('');
+
+      // Update status & deskripsi
+      document.getElementById('cfg-stage-status').textContent = `3D WEBGL // ${product.category.toUpperCase()} ${product.code} ${product.theme}`;
+      document.getElementById('cfg-active-code').textContent = `VARIASI ${product.code} // ${product.category.toUpperCase()}`;
+      document.getElementById('cfg-active-name').textContent = product.name;
+      document.getElementById('cfg-active-desc').textContent = product.fullDesc;
+
+      // Update swatches
+      document.getElementById('cfg-color-swatches').innerHTML = product.colors.map(c => `
+        <div class="inline-flex items-center gap-2 px-2.5 py-1.5 rounded bg-secondaryBg border border-borderLight">
+          <span class="w-3.5 h-3.5 rounded-full border border-neutral-300" style="background:${c.hex}"></span>
+          <span class="text-[11px] font-semibold text-mainText">${c.name}</span>
+        </div>
+      `).join('');
+
+      // Update 3 Detail Close-Up Thumbnails
+      document.getElementById('cfg-detail-thumbs').innerHTML = [0, 1, 2].map(i => `
+        <button onclick="setCfgCameraAngle('detail')" class="w-12 h-12 rounded border border-borderLight hover:border-brandRed overflow-hidden" title="Klik untuk Zoom Detail">
+          ${createDetailThumbSVG(product, i)}
+        </button>
+      `).join('');
+
+      rebuildConfiguratorMesh();
+    }
+
+    function toggleCarabinerGate() {
+      isCarabinerGateOpen = !isCarabinerGateOpen;
+      if (cfgGatePivot) {
+        cfgGatePivot.rotation.z = isCarabinerGateOpen ? -0.48 : 0;
+      }
+    }
+
+    function toggleAutoRotate() {
+      isAutoRotate = !isAutoRotate;
+      const btn = document.getElementById('btn-autorotate');
+      btn.textContent = `Auto-Rotate: ${isAutoRotate ? 'ON' : 'OFF'}`;
+      btn.className = isAutoRotate
+        ? 'px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-mainText text-white border border-mainText transition-colors'
+        : 'px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-white text-mainText border border-borderLight transition-colors';
+    }
+
+    function toggleWireframe() {
+      isWireframe = !isWireframe;
+      const btn = document.getElementById('btn-wireframe');
+      btn.className = isWireframe
+        ? 'px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-brandRed text-white border border-brandRed transition-colors'
+        : 'px-3 py-1.5 rounded text-[11px] font-semibold uppercase tracking-wider bg-white text-mainText border border-borderLight hover:border-mainText transition-colors';
+      rebuildConfiguratorMesh();
+    }
+
+    function resetHeroCamera() {
+      if (!heroCamera || !heroControls) return;
+      heroCamera.position.set(0, 0.1, 5.8);
+      heroControls.target.set(0, 0, 0);
+      heroControls.update();
+    }
+
+    function resetCfgCamera() {
+      if (!cfgCamera || !cfgControls) return;
+      cfgCamera.position.set(0, 0.1, 5.0);
+      cfgControls.target.set(0, 0, 0);
+      cfgControls.update();
+    }
+
+    function setCfgCameraAngle(preset) {
+      if (!cfgCamera || !cfgControls) return;
+      if (preset === 'front') {
+        cfgCamera.position.set(0, 0.1, 5.0);
+      } else if (preset === 'side') {
+        cfgCamera.position.set(3.1, 1.3, 3.6);
+      } else if (preset === 'detail') {
+        cfgCamera.position.set(0, -0.65, 2.9);
+      }
+      cfgControls.target.set(0, 0, 0);
+      cfgControls.update();
+    }
+
+    function openProductIn3DStudio(productId) {
+      const p = PRODUCTS.find(item => item.id === productId);
+      if (!p) return;
+      selectCfgCategory(p.category);
+      selectCfgProduct(p.id);
+      document.getElementById('kustomisasi').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // 8. RENDER KATALOG & PAPAN DESAIN (DESIGN BOARD)
+    function renderCatalogGrid() {
+      const grid = document.getElementById('catalog-grid');
+      const items = currentCatalogFilter === 'all'
+        ? PRODUCTS
+        : PRODUCTS.filter(p => p.category === currentCatalogFilter);
+
+      grid.innerHTML = items.map(p => `
+        <article class="border border-borderLight rounded-xl bg-white p-5 flex flex-col justify-between hover:border-mainText transition-colors">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl font-extrabold text-mainText">${p.code}</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-secondaryText">${p.theme}</span>
+              </div>
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded bg-secondaryBg text-mainText">
+                ${p.category}
+              </span>
+            </div>
+
+            ${createCompositeCardSVG(p)}
+
+            <h3 class="text-lg font-extrabold text-mainText mt-4">${p.name}</h3>
+            <p class="text-xs text-secondaryText mt-1.5 leading-relaxed">${p.shortDesc}</p>
+          </div>
+
+          <div class="mt-5 pt-4 border-t border-borderLight flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              ${p.colors.map(c => `<span class="w-3.5 h-3.5 rounded-full border border-neutral-300" style="background:${c.hex}" title="${c.name}"></span>`).join('')}
+            </div>
+            <button onclick="openProductIn3DStudio('${p.id}')" class="text-xs font-bold uppercase tracking-wider text-brandRed hover:text-mainText transition-colors">
+              Lihat dalam 3D &rarr;
+            </button>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    function filterCatalog(category) {
+      currentCatalogFilter = category;
+      ['all', 'lanyard', 'carabiner'].forEach(cat => {
+        const btn = document.getElementById(`filter-${cat}`);
+        btn.className = cat === category
+          ? 'px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider bg-mainText text-white transition-colors'
+          : 'px-4 py-2 rounded-md text-xs font-bold uppercase tracking-wider text-secondaryText hover:text-mainText transition-colors';
+      });
+      renderCatalogGrid();
+    }
+
+    function renderDesignBoardGrid() {
+      const boardGrid = document.getElementById('board-cards-grid');
+      boardGrid.innerHTML = PRODUCTS.map(p => `
+        <div onclick="openProductIn3DStudio('${p.id}')" class="cursor-pointer group border border-borderLight rounded-xl p-4 bg-secondaryBg hover:border-brandRed transition-colors">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-lg font-extrabold text-mainText">${p.code} <span class="text-xs font-bold text-secondaryText uppercase ml-1">${p.theme}</span></span>
+            <span class="text-[10px] font-bold uppercase text-brandRed group-hover:underline">Buka 3D &rarr;</span>
+          </div>
+          ${createCompositeCardSVG(p)}
+          <div class="mt-3 flex items-center justify-between">
+            <div class="flex gap-1">
+              ${p.colors.map(c => `<span class="w-3 h-3 rounded-full border border-neutral-300" style="background:${c.hex}"></span>`).join('')}
+            </div>
+            <span class="text-[11px] text-secondaryText truncate max-w-[200px]">${p.shortDesc}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleBoardFileUpload(event) {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById('user-design-board-img');
+        img.src = e.target.result;
+        img.classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // 9. FORMULIR PEMESANAN & VALIDASI KLIEN
+    function proceedToOrderFromCfg() {
+      const typeSelect = document.getElementById('inq-type');
+      const designSelect = document.getElementById('inq-design');
+      if (typeSelect && designSelect) {
+        typeSelect.value = activeCfgProduct.category;
+        designSelect.value = activeCfgProduct.formOption;
+      }
+      document.getElementById('pemesanan').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function syncFormThemeOptions() {
+      const type = document.getElementById('inq-type').value;
+      const designSelect = document.getElementById('inq-design');
+      if (type === 'lanyard') designSelect.value = '01 - Modern Identity Lanyard';
+      if (type === 'carabiner') designSelect.value = '01 - Classic Red Carabiner';
+    }
+
+    function handleInquirySubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('inq-name').value.trim();
+      const email = document.getElementById('inq-email').value.trim();
+      const type = document.getElementById('inq-type').value;
+      const design = document.getElementById('inq-design').value;
+      const qty = parseInt(document.getElementById('inq-qty').value, 10);
+      const notes = document.getElementById('inq-notes').value.trim() || 'Tidak ada catatan tambahan';
+
+      let isValid = true;
+      document.getElementById('err-name').classList.toggle('hidden', name.length > 0);
+      if (!name) isValid = false;
+
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      document.getElementById('err-email').classList.toggle('hidden', emailOk);
+      if (!emailOk) isValid = false;
+
+      const qtyOk = !isNaN(qty) && qty >= 1;
+      document.getElementById('err-qty').classList.toggle('hidden', qtyOk);
+      if (!qtyOk) isValid = false;
+
+      if (!isValid) return;
+
+      document.getElementById('inq-date').textContent = new Date().toLocaleString('id-ID');
+      document.getElementById('inq-summary-text').innerHTML = `
+        <p><strong>Pemohon:</strong> ${name} (${email})</p>
+        <p><strong>Kategori &amp; Konsep:</strong> ${type.toUpperCase()} &mdash; ${design}</p>
+        <p><strong>Estimasi Kuantitas:</strong> ${qty} Pcs</p>
+        <p><strong>Catatan Kustomisasi:</strong> ${notes}</p>
+      `;
+      document.getElementById('inq-feedback').classList.remove('hidden');
+    }
+
+    // 10. ANIMATION LOOP & RESPONSIVE RESIZE
+    function animate() {
+      requestAnimationFrame(animate);
+      if (isAutoRotate) {
+        if (heroRootGroup) heroRootGroup.rotation.y += 0.0035;
+        if (cfgRootGroup) cfgRootGroup.rotation.y += 0.003;
+      }
+      if (heroControls && heroRenderer) {
+        heroControls.update();
+        heroRenderer.render(heroScene, heroCamera);
+      }
+      if (cfgControls && cfgRenderer) {
+        cfgControls.update();
+        cfgRenderer.render(cfgScene, cfgCamera);
+      }
+    }
+
+    window.addEventListener('resize', () => {
+      const hCont = document.getElementById('hero-3d-container');
+      if (hCont && heroRenderer && heroCamera) {
+        heroCamera.aspect = hCont.clientWidth / hCont.clientHeight;
+        heroCamera.updateProjectionMatrix();
+        heroRenderer.setSize(hCont.clientWidth, hCont.clientHeight);
+      }
+      const cCont = document.getElementById('cfg-3d-container');
+      if (cCont && cfgRenderer && cfgCamera && cCont.clientWidth > 0) {
+        cfgCamera.aspect = cCont.clientWidth / cCont.clientHeight;
+        cfgCamera.updateProjectionMatrix();
+        cfgRenderer.setSize(cCont.clientWidth, cCont.clientHeight);
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCatalogGrid();
+      renderDesignBoardGrid();
+      initThreeScenes();
+      selectCfgCategory('lanyard');
+      animate();
+    });
+  </script>
+</body>
+</html>
+```
+
+### Kenapa Versi 3D Single-File HTML Ini Langsung Jalan di GitHub & Vercel:
+1. **100% Mandiri dalam 1 File `index.html`:** Seluruh model 3D Lanyard & Carabiner beserta tekstur grafisnya dibuat otomatis secara prosedural menggunakan Three.js di dalam `index.html`, sehingga **tidak akan ada error `404`** akibat file `.glb` atau gambar yang hilang.
+2. **Interaksi 3D Penuh:**
+   - **Hero 3D Stage:** Menampilkan Lanyard + Carabiner 3D berdampingan yang bisa diputar 360° dengan mouse atau sentuhan jari.
+   - **Konfigurator Produk 3D:** Bisa mengganti 6 tema desain secara langsung, mengaktifkan **Wireframe**, mengatur **Sudut Kamera Cepat**, serta menekan tombol **"Buka / Tutup Gate"** saat memilih Carabiner.
